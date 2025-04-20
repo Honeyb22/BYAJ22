@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title> ब्याज calculator by HONEY</title>
+  <style>
+    body {
+      background: #e3f2fd;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .calculator {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      max-width: 450px;
+      width: 100%;
+    }
+    h2 {
+      text-align: center;
+      color: #1976d2;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      color: #333;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+      margin-top: 5px;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0d47a1;
+    }
+    .result {
+      margin-top: 25px;
+      background: #e1f5fe;
+      padding: 15px;
+      border-radius: 12px;
+    }
+    .result p {
+      margin: 8px 0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h2>ब्याज कैलक्यूलेटर by HONEY</h2>
+
+    <label for="startDate">Starting Date:</label>
+    <input type="date" id="startDate">
+
+    <label for="endDate">Ending Date:</label>
+    <input type="date" id="endDate">
+
+    <label for="principal">Principal Amount:</label>
+    <input type="number" id="principal" placeholder="₹ Enter Amount">
+
+    <label for="rate">Rate of Interest (% per annum):</label>
+    <input type="number" id="rate" value="3" placeholder="%" />
+
+
+    <button onclick="calculateInterest()">Calculate Interest</button>
+
+    <div class="result" id="result" style="display: none;"></div>
+  </div>
+
+  <script>
+    function calculateInterest() {
+      const startDate = new Date(document.getElementById('startDate').value);
+      const endDate = new Date(document.getElementById('endDate').value);
+      const principal = parseFloat(document.getElementById('principal').value);
+      const rate = parseFloat(document.getElementById('rate').value);
+
+      const resultDiv = document.getElementById('result');
+
+      if (!startDate || !endDate || isNaN(principal) || isNaN(rate)) {
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = "<p>Please fill all fields correctly.</p>";
+        return;
+      }
+
+      const timeDiff = Math.abs(endDate - startDate);
+      const days = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      const months = (days / 30.44).toFixed(2);
+      const years = (days / 365).toFixed(2);
+
+      // Simple Interest Formula
+      const interest = ((principal * rate * years) / 100).toFixed(2);
+      const total = (parseFloat(principal) + parseFloat(interest)).toFixed(2);
+
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML = `
+        <p>📅 Duration: <strong>${days}</strong> days | <strong>${months}</strong> months | <strong>${years}</strong> years</p>
+        <p>💸 Interest: ₹ <strong>${interest}</strong></p>
+        <p>🧮 Total Amount: ₹ <strong>${total}</strong></p>
+      `;
+    }
+  </script>
+</body>
+</html>
