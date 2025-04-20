@@ -1,16 +1,18 @@
 function calculateInterest() {
-    // Get values from input fields
-    let principal = parseFloat(document.getElementById("principal").value);
-    let rate = parseFloat(document.getElementById("rate").value);
-    let startDate = new Date(document.getElementById("start_date").value);
-    let endDate = new Date(document.getElementById("end_date").value);
+  const principal = parseFloat(document.getElementById("principal").value);
+  const rate = parseFloat(document.getElementById("rate").value);
+  const startDate = new Date(document.getElementById("startDate").value);
+  const endDate = new Date(document.getElementById("endDate").value);
 
-    // Validate inputs
-    if (!principal || !rate || !startDate || !endDate) {
-        alert("Please fill in all fields correctly.");
-        return;
-    }
+  const timeDiff = endDate - startDate;
+  const totalMonths = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 30)); // approx months
 
+  const monthlyRate = rate / 12; // Convert annual to monthly
+  const interest = (principal * monthlyRate * totalMonths) / 100;
+
+  document.getElementById("result").innerText =
+    `Total Interest: ₹${interest.toFixed(2)}\nDuration: ${totalMonths} month(s)`;
+}
     // Calculate Duration (in days, months, and years)
     let durationInMillis = endDate - startDate;
     let durationDays = durationInMillis / (1000 * 60 * 60 * 24);
